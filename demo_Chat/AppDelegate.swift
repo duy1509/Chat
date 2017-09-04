@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+        UITabBar.appearance().tintColor = .blue
+        
+        if Auth.auth().currentUser != nil {
+            let stoaboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+            let homevc = stoaboard.instantiateViewController(withIdentifier: "DangNhap") as! UITabBarController
+            window?.rootViewController = homevc
+        } else {
+            let stoaboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+            let loginVc = stoaboard.instantiateViewController(withIdentifier: "DangNhapVC") as! DangNhapVC
+            window?.rootViewController = loginVc
+        }
         return true
     }
 
